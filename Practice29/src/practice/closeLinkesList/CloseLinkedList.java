@@ -23,14 +23,13 @@ public class CloseLinkedList {
 
     public boolean add(Item item){
         if(item == null) return false;
-        Node newNode = new Node(item);
-        size++;
-        if(size == 0){
-            newNode.next = head;
-            newNode.prev = head;
-            head = newNode;
+        if(size++ == 0){
+            head = new Node(item);
+            head.next = head;
+            head.prev = head;
             return true;
         }
+        Node newNode = new Node(item);
         Node node = head;
         while(node.next != head) node = node.next;
         node.next = newNode;
@@ -43,6 +42,18 @@ public class CloseLinkedList {
         Node node = head;
         int count = 0;
         while(node.item.getName().equals(name) || count++ != size) node = node.next;
+        if(count == size) return false;
+        Node nextNode = node.next;
+        Node prevNode = node.prev;
+        prevNode.next = nextNode;
+        nextNode.prev = prevNode;
+        return true;
+    }
+
+    public boolean remove(Item item){
+        Node node = head;
+        int count = 0;
+        while(node.item == item || count++ != size) node = node.next;
         if(count == size) return false;
         Node nextNode = node.next;
         Node prevNode = node.prev;
