@@ -3,12 +3,13 @@ package practice.manager;
 import practice.exception.IllegalAddress;
 import practice.exception.OrderAlreadyAddedException;
 import practice.items.Item;
+import practice.orders.InternetOrder;
 import practice.orders.Order;
 
 import java.util.HashMap;
 
 public class InternetOrdersManager implements OrdersManager{
-    private HashMap<String, Order> internetOrders = new HashMap<>();
+    private final HashMap<String, Order> internetOrders = new HashMap<>();
 
 
     public void addOrder(String address,Order order) throws OrderAlreadyAddedException {
@@ -31,8 +32,9 @@ public class InternetOrdersManager implements OrdersManager{
     public void addItem(String address, Item item) throws IllegalAddress {
         Order order = internetOrders.remove(address);
         if(order == null) throw new IllegalAddress();
-        order.add(item);
-        internetOrders.put(address,order);
+        Order copyOrder = new InternetOrder(order.getItems());
+        copyOrder.add(item);
+        internetOrders.put(address,copyOrder);
     }
 
     @Override
@@ -67,5 +69,10 @@ public class InternetOrdersManager implements OrdersManager{
         int count = 0;
         for(Order order: internetOrders.values()) count += order.getItemCount(item);
         return count;
+    }
+
+    @Override
+    public void printOrders() {
+        for(Order order: internetOrders.values()) order.printItems();
     }
 }

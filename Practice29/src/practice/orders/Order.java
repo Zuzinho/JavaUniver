@@ -19,4 +19,5 @@ public interface Order {
     public Item[] getSortedItems();
     public Customer getCustomer();
     public void setCustomer(Customer customer);
+    public void printItems();
 }

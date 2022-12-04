@@ -158,4 +158,10 @@ public class RestaurantOrder implements Order{
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+    @Override
+    public void printItems() {
+        System.out.println("Price " + getFullPrice());
+        for(Item item: order) System.out.println(item);
+    }
 }

@@ -5,13 +5,9 @@ import practice.exception.IllegalTableNumber;
 import practice.exception.OrderAlreadyAddedException;
 import practice.items.Dish;
 import practice.items.drinks.Drink;
-import practice.items.Item;
 import practice.items.drinks.DrinkTypeEnum;
 import practice.manager.InternetOrdersManager;
-import practice.manager.RestaurantOrdersManager;
 import practice.orders.InternetOrder;
-import practice.orders.Order;
-import practice.orders.RestaurantOrder;
 
 public class Tester {
     public static void main(String[] args) throws OrderAlreadyAddedException, IllegalTableNumber, IllegalAddress {
@@ -31,11 +27,6 @@ public class Tester {
         manager.addItem("Pushkina",new Drink(60,"Cola","Coca cola",DrinkTypeEnum.SODA));
         manager.removeOrder("Pushkina");
         manager.addOrder("Pushkina",internetOrder);
-        System.out.println(manager.getFullPrices());
-        for(Order order: manager.getOrders()){
-            for(Item item: order.getItems()){
-                System.out.printf("Name - %1$s, price - %2$s, description - %3$s\n",item.getName(),item.getPrice(),item.getDescription());
-            }
-        }
+        manager.printOrders();
     }
 }

@@ -126,4 +126,10 @@ public class InternetOrder implements Order{
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+    @Override
+    public void printItems() {
+        System.out.println("Price " + getFullPrice());
+        for(Item item: getItems()) System.out.println(item);
+    }
 }

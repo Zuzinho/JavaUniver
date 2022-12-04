@@ -23,4 +23,9 @@ public class Item {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Price - %1$s, name - %2$s, description - %3$s",price,name,description);
+    }
 }

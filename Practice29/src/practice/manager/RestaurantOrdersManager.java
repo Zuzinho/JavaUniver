@@ -4,9 +4,7 @@ import practice.exception.IllegalTableNumber;
 import practice.exception.OrderAlreadyAddedException;
 import practice.items.Item;
 import practice.orders.Order;
-import practice.orders.RestaurantOrder;
 
-import java.security.KeyPair;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -111,5 +109,10 @@ public class RestaurantOrdersManager implements OrdersManager{
         int count = 0;
         for(Order order: restaurantOrders.values()) count += order.getItemCount(item);
         return count;
+    }
+
+    @Override
+    public void printOrders() {
+        for(Order order: restaurantOrders.values()) System.out.println(order);
     }
 }

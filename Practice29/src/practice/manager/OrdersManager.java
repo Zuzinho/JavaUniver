@@ -9,4 +9,5 @@ public interface OrdersManager {
     public int getItemFullCount(Item item);
     public Order[] getOrders();
     public int getFullPrices();
+    public void printOrders();
 }
