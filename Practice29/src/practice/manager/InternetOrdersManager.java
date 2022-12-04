@@ -11,28 +11,32 @@ import java.util.HashMap;
 public class InternetOrdersManager implements OrdersManager{
     private final HashMap<String, Order> internetOrders = new HashMap<>();
 
-
+    @Override
     public void addOrder(String address,Order order) throws OrderAlreadyAddedException {
         if(internetOrders.get(address) == order) throw new OrderAlreadyAddedException();
         internetOrders.put(address,order);
     }
 
+    @Override
     public Order getOrder(String address) throws IllegalAddress {
         Order order = internetOrders.get(address);
         if(order == null) throw new IllegalAddress();
         return order;
     }
 
+    @Override
     public Order removeOrder(String address) throws IllegalAddress {
         Order order = internetOrders.remove(address);
         if(order == null) throw new IllegalAddress();
         return order;
     }
 
+    @Override
     public void addItem(String address, Item item) throws IllegalAddress {
-        Order order = internetOrders.remove(address);
+        InternetOrder order = (InternetOrder) internetOrders.remove(address);
         if(order == null) throw new IllegalAddress();
-        Order copyOrder = new InternetOrder(order.getItems());
+        InternetOrder copyOrder = new InternetOrder(order.getItems());
+        copyOrder.setCustomer(order.getCustomer());
         copyOrder.add(item);
         internetOrders.put(address,copyOrder);
     }

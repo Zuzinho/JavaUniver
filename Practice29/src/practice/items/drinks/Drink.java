@@ -34,9 +34,7 @@ public final class Drink extends Item implements Alcoholable {
 
     @Override
     public String toString() {
-        String result = super.toString();
-        String alcoholable = alcoholVol == 0? ", not alcoholable": ", alcoholable";
-        return result + alcoholable + String.format(", alcohol volume - %1$s",alcoholVol);
+        return super.toString() + ',' + type + ',' + alcoholVol;
 
     }
 }

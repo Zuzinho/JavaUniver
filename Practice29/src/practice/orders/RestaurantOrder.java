@@ -11,24 +11,19 @@ public class RestaurantOrder implements Order{
     Item[] order;
     int size;
     int capacity;
-    Customer customer;
+    int tableNumber;
 
-    public RestaurantOrder(){
-        this.customer = Customer.MATURE_UNKNOWN_CUSTOMER;
+    public RestaurantOrder(int tableNumber){
         size = 0;
         capacity = 1;
         order = new Item[capacity];
+        this.tableNumber = tableNumber;
     }
-    public RestaurantOrder(Customer customer){
-        this.customer = customer;
-        size = 0;
-        capacity = 1;
-        order = new Item[capacity];
-    }
-    public RestaurantOrder(Item[] items){
+    public RestaurantOrder(int tableNumber,Item[] items){
         order = items;
         size = order.length;
         capacity = size;
+        this.tableNumber = tableNumber;
     }
     @Override
     public boolean add(Item item) {
@@ -149,19 +144,13 @@ public class RestaurantOrder implements Order{
         return items;
     }
 
-    @Override
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    @Override
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public int getTableNumber() {
+        return tableNumber;
     }
 
     @Override
     public void printItems() {
         System.out.println("Price " + getFullPrice());
-        for(Item item: order) System.out.println(item);
+        for(int i = 0;i<size;i++) System.out.println(order[i]);
     }
 }

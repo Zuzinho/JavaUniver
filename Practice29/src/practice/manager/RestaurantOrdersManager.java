@@ -1,31 +1,56 @@
 package practice.manager;
 
+import practice.exception.IllegalAddress;
 import practice.exception.IllegalTableNumber;
 import practice.exception.OrderAlreadyAddedException;
 import practice.items.Item;
+import practice.orders.InternetOrder;
 import practice.orders.Order;
+import practice.orders.RestaurantOrder;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class RestaurantOrdersManager implements OrdersManager{
-    private HashMap<Integer, Order> restaurantOrders;
-    private int tableCount;
+    private final HashMap<Integer, Order> restaurantOrders;
+    private final int tableCount;
 
     public RestaurantOrdersManager(int tableCount){
         restaurantOrders = new HashMap<>();
         this.tableCount = tableCount;
     }
 
-    public void addOrder(int tableNumber,Order order) throws OrderAlreadyAddedException, IllegalTableNumber {
-        if(tableNumber > tableCount) throw new IllegalTableNumber();
+    @Override
+    public void addOrder(String address,Order order) throws OrderAlreadyAddedException {
+        int tableNumber = Integer.parseInt(address);
         if(restaurantOrders.get(tableNumber) == order) throw new OrderAlreadyAddedException();
         restaurantOrders.put(tableNumber,order);
     }
 
-    public Order getOrder(int tableNumber) throws IllegalTableNumber {
-        if(tableNumber > tableCount) throw new IllegalTableNumber();
-        return restaurantOrders.get(tableNumber);
+    @Override
+    public Order getOrder(String address) throws IllegalAddress {
+        int tableNumber = Integer.parseInt(address);
+        Order order = restaurantOrders.get(tableNumber);
+        if(order == null) throw new IllegalAddress();
+        return order;
+    }
+
+    @Override
+    public Order removeOrder(String address) throws IllegalAddress {
+        int tableNumber = Integer.parseInt(address);
+        Order order = restaurantOrders.remove(tableNumber);
+        if(order == null) throw new IllegalAddress();
+        return order;
+    }
+
+    @Override
+    public void addItem(String address, Item item) throws IllegalAddress {
+        int tableNumber = Integer.parseInt(address);
+        Order order = restaurantOrders.remove(tableNumber);
+        if(order == null) throw new IllegalAddress();
+        Order copyOrder = new RestaurantOrder(tableNumber,order.getItems());
+        copyOrder.add(item);
+        restaurantOrders.put(tableNumber,copyOrder);
     }
 
     public int getFreeTableNumber(){
@@ -46,11 +71,6 @@ public class RestaurantOrdersManager implements OrdersManager{
         return numbers;
     }
 
-    public Order removeOrder(int tableNumber) throws IllegalTableNumber {
-        if(tableNumber > tableCount) throw new IllegalTableNumber();
-        return restaurantOrders.remove(tableNumber);
-    }
-
     public int remove(Order order){
         int removedTable = -1;
         for (Map.Entry<Integer,Order> pair: restaurantOrders.entrySet()){
@@ -69,13 +89,6 @@ public class RestaurantOrdersManager implements OrdersManager{
         return count;
     }
 
-    public void addItem(int tableNumber, Item item) throws IllegalTableNumber {
-        if(tableNumber > tableCount) throw new IllegalTableNumber();
-        Order order = restaurantOrders.remove(tableNumber);
-        if(order == null) return;
-        order.add(item);
-        restaurantOrders.put(tableNumber,order);
-    }
 
     @Override
     public Order[] getOrders(){
@@ -113,6 +126,6 @@ public class RestaurantOrdersManager implements OrdersManager{
 
     @Override
     public void printOrders() {
-        for(Order order: restaurantOrders.values()) System.out.println(order);
+        for(Order order: restaurantOrders.values()) order.printItems();
     }
 }

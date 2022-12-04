@@ -116,13 +116,9 @@ public class InternetOrder implements Order{
         }
         return items;
     }
-
-    @Override
     public Customer getCustomer() {
         return customer;
     }
-
-    @Override
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }

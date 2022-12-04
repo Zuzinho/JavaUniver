@@ -26,6 +26,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return String.format("Price - %1$s, name - %2$s, description - %3$s",price,name,description);
+        return price + "," + name + ',' + description;
     }
 }

@@ -17,7 +17,5 @@ public interface Order {
     public int getItemCount(Item item);
     public Item[] getItemsUnique();
     public Item[] getSortedItems();
-    public Customer getCustomer();
-    public void setCustomer(Customer customer);
     public void printItems();
 }
